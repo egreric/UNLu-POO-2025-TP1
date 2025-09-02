@@ -1,11 +1,13 @@
-package ar.edu.unlu.poo.tp1.ej1;
+package ar.edu.unlu.poo.tp1.ej2;
 
-public class ListaEnlazada {
-    private Nodo primerElemento;
+import ar.edu.unlu.poo.tp1.ej1.Nodo;
+
+public class ListaEnlazadaDoble {
+    private NodoDoble primerElemento;
 
     // Crear lista es reemplazado por el constructor de la clase
-    public ListaEnlazada(){
-       primerElemento = null;
+    public ListaEnlazadaDoble(){
+        primerElemento = null;
     }
 
     public boolean esVacia(){
@@ -14,7 +16,7 @@ public class ListaEnlazada {
 
     public int longitud(){
         int cantidad = 0;
-        Nodo elementoActual = primerElemento;
+        NodoDoble elementoActual = primerElemento;
         while (elementoActual != null){
             cantidad++;
             elementoActual = elementoActual.getSiguiente();
@@ -23,11 +25,13 @@ public class ListaEnlazada {
     }
 
     public void agregarElemento(Object dato){
-        Nodo nuevoElemento = new Nodo(dato);
+        NodoDoble nuevoElemento = new NodoDoble(dato);
         if (esVacia()){
             primerElemento = nuevoElemento;
         } else {
-            buscaNodo(longitud()).setSiguiente(nuevoElemento);
+            NodoDoble ultimoElemento = buscaNodo(longitud());
+            ultimoElemento.setSiguiente(nuevoElemento);
+            nuevoElemento.setAnterior(ultimoElemento);
         }
     }
 
@@ -35,10 +39,14 @@ public class ListaEnlazada {
         if (posicionValida(posicion)){
             if (posicion == 1){
                 primerElemento = primerElemento.getSiguiente();
+                primerElemento.setAnterior(null);
             } else {
-                Nodo nodoAnterior = buscaNodo(posicion - 1);
-                Nodo nodoAEliminar = nodoAnterior.getSiguiente();
+                NodoDoble nodoAnterior = buscaNodo(posicion - 1);
+                NodoDoble nodoAEliminar = nodoAnterior.getSiguiente();
                 nodoAnterior.setSiguiente(nodoAEliminar.getSiguiente());
+                if (nodoAEliminar.getSiguiente() != null){
+                    nodoAEliminar.getSiguiente().setAnterior(nodoAnterior);
+                }
             }
         }
     }
@@ -53,20 +61,23 @@ public class ListaEnlazada {
 
     public void insertarElemento(Object dato, int posicion){
         if (posicionValida(posicion)){
-            Nodo nuevoElemento = new Nodo(dato);
+            NodoDoble nuevoElemento = new NodoDoble(dato);
             if (posicion == 1){
+                primerElemento.setAnterior(nuevoElemento);
                 nuevoElemento.setSiguiente(primerElemento);
                 primerElemento = nuevoElemento;
             } else {
-                Nodo nodoAnterior = buscaNodo(posicion - 1);
+                NodoDoble nodoAnterior = buscaNodo(posicion - 1);
                 nuevoElemento.setSiguiente(nodoAnterior.getSiguiente());
+                nuevoElemento.setAnterior(nodoAnterior);
                 nodoAnterior.setSiguiente(nuevoElemento);
+                nuevoElemento.getSiguiente().setAnterior(nuevoElemento);
             }
         }
     }
 
-    private Nodo buscaNodo(int posicionBuscada){
-        Nodo nodoBuscado = primerElemento; // En el caso de que no hubiera elementos en la lista devuelve null
+    private NodoDoble buscaNodo(int posicionBuscada){
+        NodoDoble nodoBuscado = primerElemento; // En el caso de que no hubiera elementos en la lista devuelve null
         int posicionActual = 1;
         if (!esVacia() && posicionValida(posicionBuscada)) {
             while (posicionActual != posicionBuscada) {

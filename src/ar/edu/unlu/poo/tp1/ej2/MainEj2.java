@@ -1,11 +1,10 @@
-package ar.edu.unlu.poo.tp1.ej1;
+package ar.edu.unlu.poo.tp1.ej2;
 
-public class MainEj1 {
+public class MainEj2 {
     public static void main(String[] args) throws Exception {
-        Nodo nodo1 = new Nodo("Primer NODO");
 
         System.out.println("\n--- Creo lista y pregunto si esta vacia y la cantidad de elementos ---");
-        ListaEnlazada l1 = new ListaEnlazada();
+        ListaEnlazadaDoble l1 = new ListaEnlazadaDoble();
         System.out.println("Esta vacia?: " + l1.esVacia());
         System.out.println("Tengo " + l1.longitud() + " elemento/s");
         //System.out.println(l1.recuperarElemento(0));
@@ -31,7 +30,7 @@ public class MainEj1 {
         System.out.println("Mi segundo elemento es: " + l1.recuperarElemento(2));
         System.out.println("Mi tercer elemento es: " + l1.recuperarElemento(3));
 
-
+        /*
         System.out.println("\n--- Borro el ultimo elemento ---");
         l1.eliminarElemento(l1.longitud());
         System.out.println("Esta vacia?: " + l1.esVacia());
@@ -39,5 +38,6 @@ public class MainEj1 {
         System.out.println("Mi primer elemento es: " + l1.recuperarElemento(1));
         System.out.println("Mi segundo elemento es: " + l1.recuperarElemento(2));
 
+         */
     }
 }
