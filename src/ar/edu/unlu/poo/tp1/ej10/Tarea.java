@@ -8,6 +8,7 @@ public class Tarea {
     private Boolean completa = false;
     private LocalDate fechaLimite = null;
     private LocalDate fechaRecordatorio = null;
+    private LocalDate fechaFinalizacion;
 
 
     public Tarea(String descripcion, Prioridad prioridad){
@@ -28,6 +29,13 @@ public class Tarea {
         }
     }
 
+    public String getFechaCompletada() {
+        if (estaCompleta()){
+            return fechaFinalizacion.toString();
+        }
+        return "";
+    }
+
     public void cambiarDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -36,8 +44,8 @@ public class Tarea {
         this.prioridad = prioridad;
     }
 
-    public void completar(){
-        this.completa = true;
+    public void completar() {
+        this.fechaFinalizacion = LocalDate.now();
     }
 
     public String mostrarTarea(){
@@ -54,8 +62,8 @@ public class Tarea {
         return estado + descripcion;
     }
 
-    public Boolean estaCompleta(){
-        return this.completa;
+    public boolean estaCompleta() {
+        return this.fechaFinalizacion != null;
     }
 
     public Boolean estaVencida(){
@@ -64,5 +72,17 @@ public class Tarea {
 
     public boolean estaPorVencer(){
         return fechaRecordatorio != null && !estaCompleta() && !estaVencida() && !LocalDate.now().isBefore(fechaRecordatorio);
+    }
+
+    public String getTitulo(){
+        return this.descripcion;
+    }
+
+    public Prioridad getPrioridad() {
+        return prioridad;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
     }
 }
